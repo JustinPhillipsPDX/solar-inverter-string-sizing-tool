@@ -17,7 +17,32 @@
         - Ground Mount Trise: 30°C
         - Pitched Roof Trise: 32°C
         - Flat Roof Trise: 36°C
+*/
 
+    function rackingTempAdj(solutionType) {
+        var adjustedTemp = 0;
+        switch (solutionType) {
+            case "poleMount":
+                adjustedTemp = 29;
+                break;
+            case "groundMount":
+                adjustedTemp = 30;
+                break;
+            case "pitchedRoof":
+                adjustedTemp = 32;
+                break;
+            case "flatRoof":
+                adjustedTemp = 36;
+                break;
+            default:
+                break;
+        }
+        return adjustedTemp;
+    }
+
+    console.log(rackingTempAdj("poleMount")); //29
+
+/*
     //PV System Derating (Estimated efficiency/derate value)
     http://www.pvpower.com/assets/Measuring-PV-Efficiency-Solar-Panels.pdf
 
@@ -30,6 +55,15 @@
         
             m² = mm²/1,000,000
 
+*/
+
+    function feetSqToMetersSq(feet) {
+        return (feet / 10.76).toFixed(2);
+    }
+
+    console.log(feetSqToMetersSq(30)); //2.79
+
+/*
         //eg.
         
             Nmax = 400W / (1000 W/m² x 2.79m²) = 0.143 x 100% = 14.3%
