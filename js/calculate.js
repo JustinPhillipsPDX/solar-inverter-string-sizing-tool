@@ -23,9 +23,9 @@
 
     //console.log(rackingTempAdj("poleMount")); //29
 
-    //all-in-one conversion
+    //
     function convert(value1,unit1,unit2,value2 = 1) {
-        //use value2 to square and convert
+        //use value2 to multiply and convert
 
         var conversion = 1;
 
