@@ -21,37 +21,96 @@
         return adjustedTemp
     }
 
-    console.log(rackingTempAdj("poleMount")); //29
+    //console.log(rackingTempAdj("poleMount")); //29
 
+    //all-in-one conversion
+    function convert(value1,unit1,unit2,value2 = 1) {
+        //use value2 to square and convert
 
-    //convert feet squared to meters squared
-    function convertSqFeetToSqMeters(feet) {
-        return (feet / 10.76).toFixed(2)
+        var conversion = 1;
+        var convertedValue = 1;
+
+        switch (unit1) {
+            case "in":
+                if (unit2 == "ft") {
+                    conversion = 12;
+                } else if (unit2 == "mm") {
+                    conversion = 0.0393701;
+                } else if (unit2 == "m") {
+                    conversion = 39.3701;
+                }
+                break;
+            case "in2":
+                if (unit2 == "ft2") {
+                    conversion = 144;
+                } else if (unit2 == "mm2") {
+                    conversion = 0.00155;
+                } else if (unit2 == "m2") {
+                    conversion = 1550;
+                }
+                break;
+            case "ft":
+                if (unit2 == "in") {
+                    conversion = 0.0833333;
+                } else if (unit2 == "mm") {
+                    conversion = 0.00328084;
+                } else if (unit2 == "m") {
+                    conversion = 3.28084;
+                }
+                break;
+            case "ft2":
+                if (unit2 == "in2") {
+                    conversion = 0.00694444;
+                } else if (unit2 == "mm2") {
+                    conversion = 1.0764e-5;
+                } else if (unit2 == "m2") {
+                    conversion = 10.7639;
+                }
+                break;
+            case "mm":
+                if (unit2 == "in") {
+                    conversion = 25.4;
+                } else if (unit2 == "ft") {
+                    conversion = 304.8;
+                } else if (unit2 == "m") {
+                    conversion = 1000;
+                }
+                break;
+            case "mm2":
+                if (unit2 == "in2") {
+                    conversion = 645.16;
+                } else if (unit2 == "ft2") {
+                    conversion = 92903;
+                } else if (unit2 == "m2") {
+                    conversion = 1e+6;
+                }
+                break;
+            case "m":
+                if (unit2 == "in") {
+                    conversion = 0.0254;
+                } else if (unit2 == "ft") {
+                    conversion = 0.3048;
+                } else if (unit2 == "mm") {
+                    conversion = 0.001;
+                }
+                break;
+            case "m2":
+                if (unit2 == "in2") {
+                    conversion = 0.00064516;
+                } else if (unit2 == "ft2") {
+                    conversion = 0.092903;
+                } else if (unit2 == "mm2") {
+                    conversion = 1e-6;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return (value1 * value2 / conversion).toFixed(2)
     }
 
-    console.log(convertSqFeetToSqMeters(30)); //2.79
-
-
-    function convertInchToMillimeter(inches) {
-        return inches * 25.4
-    }
-
-    console.log(convertInchToMillimeter(25)) //635
-
-
-    function convertFeetToMillimeter(feet) {
-        return feet * 304.8
-    }
-
-    console.log(convertFeetToMillimeter(25)) //7620
-
-
-    function calcMetersSquared(mmLength,mmWidth) {
-        return (mmLength * mmWidth / 1000000).toFixed(2)
-    }
-
-
-    console.log(calcMetersSquared(1993,1001)); //1.99
+    console.log(convert(1993, "mm2", "m2", 1001)); //1.99m²
 
     //panel maximum efficiency
     function calcMaxEfficiency() {
