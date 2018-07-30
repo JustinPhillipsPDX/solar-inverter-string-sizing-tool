@@ -1,7 +1,9 @@
 
     //temperature rise based on racking solution
     function rackingTempAdj(solutionType) {
+
         var adjustedTemp = 0;
+
         switch (solutionType) {
             case "poleMount":
                 adjustedTemp = 29;
@@ -18,7 +20,9 @@
             default:
                 break;
         }
+
         return adjustedTemp
+
     }
 
     //console.log(rackingTempAdj("poleMount")); //29
@@ -107,12 +111,17 @@
         }
 
         return (value1 * value2 / conversion).toFixed(2)
+
     }
 
-    console.log(convert(1993, "mm2", "m2", 1001)); //1.99m²
+    //eg. multiplying and converting square units
+    //console.log(convert(1993, "mm2", "m2", 1001)); //1.99 m²
+    
+    //eg. converting units
+    //console.log(convert(1,"ft","in")); //12.00 in
 
     //panel maximum efficiency
-    function calcMaxEfficiency() {
-
-    }
+    //function calcMaxEfficiency() {
+    //
+    //}
 
