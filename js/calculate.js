@@ -1,24 +1,5 @@
-/*
-    //Solar Resources
-        Home Power - PV System Derating
-            https://www.homepower.com/pv-system-derating
-        Civic Solar - Solar Inverter String Design Calculations
-            https://www.civicsolar.com/support/installer/articles/solar-inverter-string-design-calculations
 
-    //values needed for calculation
-        inverter max voltage (Vmax)
-        module open circuit voltage (Voc) @ standard test conditions (STC)
-        module temperature coefficient of Voc (TCVoc)
-        module maximum power point voltage (Vmpp or Vmp)
-        module temperature coefficient of Vmp (TC Pmpp)
-
-    //TRise by racking solutions (equals approximately)
-        - Pole Mount Trise: 29°C
-        - Ground Mount Trise: 30°C
-        - Pitched Roof Trise: 32°C
-        - Flat Roof Trise: 36°C
-*/
-
+    //temperature rise based on racking solution
     function rackingTempAdj(solutionType) {
         var adjustedTemp = 0;
         switch (solutionType) {
@@ -40,101 +21,11 @@
         return adjustedTemp;
     }
 
-    console.log(rackingTempAdj("poleMount")); //29
-
-/*
-    //PV System Derating (Estimated efficiency/derate value)
-    http://www.pvpower.com/assets/Measuring-PV-Efficiency-Solar-Panels.pdf
-
-        Nmax (maximum efficiency) = Pmax (maximum power output) / (1000 W/m² * (area of collector))
-
-        //convert units
-            
-            Am² = Aft²/10.76
-            30ft² x 1m²/10.76ft² = 2.79m²
-        
-            m² = mm²/1,000,000
-
-*/
-
+    //convert feet squared to meters squared
     function feetSqToMetersSq(feet) {
         return (feet / 10.76).toFixed(2);
     }
 
+    console.log(rackingTempAdj("poleMount")); //29
     console.log(feetSqToMetersSq(30)); //2.79
 
-/*
-        //eg.
-        
-            Nmax = 400W / (1000 W/m² x 2.79m²) = 0.143 x 100% = 14.3%
-
-            1,993mm x 1,001mm = 1,994,993mm² / 1,000,000 = 1.994993m²
-
-            Nmax (maximum efficiency) = 320W / (1000 W/m² x 1.994993m²) = 0.1604 x 100% = 16.04%
-
-        //STC Component Derating Factors
-            Note: According to the National Renewable Energy Laboratory’s PVWatts calculator, a 
-            typical derate factor is 0.84.
-            https://blog.aurorasolar.com/how-to-size-a-pv-system-from-an-electricity-bill/
-
-
-
-    //ASHRAE DATA INSIDE NORTH AMERICA
-        SolarABC's: http://www.solarabcs.org/about/publications/reports/expedited-permit/map/index.html
-    //OUTSIDE NORTH AMERICA
-        SolarDesignTemps: http://www.solardesigntemps.com/
-
-    //PORTLAND INTERNATIONAL AP
-        THigh (High Temp 2% Avg.): 32°C
-        TLow (Extreme Min): -6°C
-
-    //MEMPHIS INTERNATIONAL AP
-        THigh (High Temp 2% Avg.): 35°C
-        TLow (Extreme Min): -12°C
-
-    //Solar Equipment used for Calculation
-        //Sunmodule XL SW 320 MONO (33mm frame)
-            open circuit voltage (Voc): 45.9V
-            STC (TStc): 1000 W/m², 25°C
-                Note: Temperature is always a factor in the output of a panel so STC assumes less than 25 degrees C.
-            TCVoc: -0.304%/°C
-            maximum power point voltage (Vmpp): 36.7V
-            TC Pmpp (VmpCoef): -0.43%/°C
-
-            length: 1,993mm
-            width: 1,001mm
-
-        //SMA Sunny Boy 7700TL-US-22
-            Vmax: 600V
-            Vstart: 150V @ 240V AC
-
-    //Calculation for minimum module in series (example based on Memphis data)
-
-        //part one (calc min number of modules within a series string)
-            Vmin = (Vmp + ((THigh + TRise - TStc) x (VmpCoef x Vmp/100)))
-            Vmin = 36.7V + ((35°C + 32°C - 25°C) x (-0.43 x 36.7/100))
-            Vmin = 36.7 + (42 x -0.158)
-            Vmin = 30.064V
-
-        //part two (de-rate factor)
-            Vmin = 30.064V x 0.84 = 25.25376
-        
-        //part three (bare minimum number of modules we can expect to have in our system)
-            Vstart / Vmin
-            150V / 25.25376V = 5.939709571960769 ~ 6
-
-            The minimum number of modules in series can be a low as 6.
-
-    //Calculation for maximum number of modules within a series
-
-            Vmax = Voc + ((TLow - TStc) x (VocCoef x Voc/100))
-            Vmax = 45.9 + ((-12°C - 25°C) x (-0.304 x 45.9/100))
-            Vmax = 45.9 + (37 x 0.14)
-            Vmax = 51.08
-
-        //Divide our result by the maximum DC system voltage of the chosen inverter
-            600 / 51.08 = 11.74
-
-            The maximum number of modules in series can be as much as 11.
-
-*/
