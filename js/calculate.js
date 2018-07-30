@@ -38,7 +38,10 @@
 
             Nmax (maximum efficiency) = 320W / (1000 W/m² x 1.994993m²) = 0.1604 x 100% = 16.04%
 
-        //STC Component Derating Factors (PVWATTS Default Range)
+        //STC Component Derating Factors
+            Note: According to the National Renewable Energy Laboratory’s PVWatts calculator, a 
+            typical derate factor is 0.84.
+            https://blog.aurorasolar.com/how-to-size-a-pv-system-from-an-electricity-bill/
 
 
 
@@ -71,7 +74,7 @@
             Vmax: 600V
             Vstart: 150V @ 240V AC
 
-    //Three part calculation (example based on Memphis data)
+    //Calculation for minimum module in series (example based on Memphis data)
 
         //part one (calc min number of modules within a series string)
             Vmin = (Vmp + ((THigh + TRise - TStc) x (VmpCoef x Vmp/100)))
@@ -80,6 +83,24 @@
             Vmin = 30.064V
 
         //part two (de-rate factor)
-            
+            Vmin = 30.064V x 0.84 = 25.25376
+        
+        //part three (bare minimum number of modules we can expect to have in our system)
+            Vstart / Vmin
+            150V / 25.25376V = 5.939709571960769 ~ 6
+
+            The minimum number of modules in series can be a low as 6.
+
+    //Calculation for maximum number of modules within a series
+
+            Vmax = Voc + ((TLow - TStc) x (VocCoef x Voc/100))
+            Vmax = 45.9 + ((-12°C - 25°C) x (-0.304 x 45.9/100))
+            Vmax = 45.9 + (37 x 0.14)
+            Vmax = 51.08
+
+        //Divide our result by the maximum DC system voltage of the chosen inverter
+            600 / 51.08 = 11.74
+
+            The maximum number of modules in series can be as much as 11.
 
 */
