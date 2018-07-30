@@ -28,7 +28,6 @@
         //use value2 to square and convert
 
         var conversion = 1;
-        var convertedValue = 1;
 
         switch (unit1) {
             case "in":
